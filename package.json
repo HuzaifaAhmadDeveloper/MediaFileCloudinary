@@ -9,13 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@endo/captp": "^4.2.0",
+    "@endo/eventual-send": "^1.2.2",
+    "@eslint/config-array": "^0.17.0",
+    "@eslint/object-schema": "^2.1.4",
     "cloudinary": "^2.3.0",
     "formidable": "^3.5.1",
+    "glob": "^11.0.0",
     "next": "14.2.4",
     "next-cloudinary": "^6.6.2",
     "pg": "^8.12.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "rimraf": "^6.0.1"
   },
   "devDependencies": {
     "@types/formidable": "^3.4.5",

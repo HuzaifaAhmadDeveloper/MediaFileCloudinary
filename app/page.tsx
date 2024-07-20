@@ -121,28 +121,50 @@ export default function Home() {
 
   return (
     <main>
-      <div>
-        <div>
+      <div className="container mx-auto p-4">
+        <div className="flex items-center space-x-4 mb-4">
           <input type="file" onChange={(e) => setFile(e.target.files?.[0] || null)} />
-          <select onChange={(e) => setFileType(e.target.value)}>
+          <select
+            className="p-2 border rounded"
+            onChange={(e) => setFileType(e.target.value)}
+          >
             <option value="image">Image</option>
             <option value="video">Video</option>
           </select>
-          <button onClick={submitFile}>Upload</button>
+          <button
+            className="p-2 bg-blue-500 text-white rounded"
+            onClick={submitFile}
+          >
+            Upload
+          </button>
         </div>
         <div>
-          <h2>Uploaded Media</h2>
-          {media.map((item) => (
-            <div key={item.id}>
-              {item.type === "image" ? (
-                <img src={item.url} alt={`media-${item.id}`} width="200" />
-              ) : (
-                <video src={item.url} controls width="200" />
-              )}
-              <button className="bg-red-500 text-white font-bold m-5 p-3 rounded-md" onClick={() => setEditId(item.id)}>Edit</button>
-              <button className="bg-red-500 text-white font-bold m-5 p-3 rounded-md" onClick={() => deleteFileUrl(item.id)}>Delete</button>
-            </div>
-          ))}
+          <h2 className="text-2xl font-bold mb-4">Uploaded Media</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {media.map((item) => (
+              <div key={item.id} className="relative">
+                {item.type === "image" ? (
+                  <img src={item.url} alt={`media-${item.id}`} className="w-full h-auto" />
+                ) : (
+                  <video src={item.url} controls className="w-full h-auto" />
+                )}
+                <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center space-y-2 opacity-0 hover:opacity-100 bg-black bg-opacity-50 transition-opacity">
+                  <button
+                    className="bg-yellow-500 text-white font-bold py-1 px-2 rounded"
+                    onClick={() => setEditId(item.id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="bg-red-500 text-white font-bold py-1 px-2 rounded"
+                    onClick={() => deleteFileUrl(item.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </main>
