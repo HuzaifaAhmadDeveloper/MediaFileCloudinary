@@ -1,11 +1,13 @@
 import { Pool } from "pg";
 
+const portNumber = process.env.PORT_NUMBER ? parseInt(process.env.PORT_NUMBER, 10) : 5432; // Default to port 5432 if undefined
+
 export const pool = new Pool({
   user: process.env.USER_NAME,
   host: process.env.HOST_NAME,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
-  port: parseInt(process.env.PORT_NUMBER, 10)
+  port: portNumber
 });
 
 export default async function dbConnect() {

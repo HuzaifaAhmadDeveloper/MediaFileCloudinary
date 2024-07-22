@@ -3,12 +3,13 @@ import dbConnect, { pool } from "@/app/utils/db";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   await dbConnect();
+  let fileType = ''; // Initialize fileType
   try {
     const body = await req.json();
     console.log(`Received body:`, body);
-    console.log(body)
 
-    const { fileUrl, fileType } = body;
+    const { fileUrl, fileType: parsedFileType } = body;
+    fileType = parsedFileType; // Assign parsedFileType to fileType
     console.log(`Received ${fileType} URL:`, fileUrl);
 
     if (!fileUrl) {
