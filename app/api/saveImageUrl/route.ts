@@ -23,9 +23,4 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: `Failed to save ${fileType} URL` }, { status: 500 });
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};
+;
