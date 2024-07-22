@@ -6,6 +6,7 @@ export default function Home() {
   const [fileType, setFileType] = useState<string>("image");
   const [media, setMedia] = useState<{ id: number; url: string; type: string }[]>([]);
   const [editId, setEditId] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   useEffect(() => {
     fetch("/api/getUrl")
@@ -41,6 +42,7 @@ export default function Home() {
         console.log(`${fileType} uploaded to Cloudinary:`, data);
         const fileUrl = data.secure_url; // Use secure_url instead of url
         if (editId) {
+          console.log(`Updating file with ID: ${editId}`);
           updateFileUrl(editId, fileUrl, fileType);
         } else {
           saveFileUrl(fileUrl, fileType); // Send the URL and type to your backend
@@ -119,6 +121,11 @@ export default function Home() {
       });
   };
 
+  const filteredMedia = media.filter((item) => {
+    if (selectedCategory === "all") return true;
+    return item.type === selectedCategory;
+  });
+
   return (
     <main>
       <div className="container mx-auto p-4">
@@ -135,13 +142,35 @@ export default function Home() {
             className="p-2 bg-blue-500 text-white rounded"
             onClick={submitFile}
           >
-            Upload
+            {editId ? 'Update' : 'Upload'}
           </button>
         </div>
+
+        <div className="flex space-x-4 mb-4">
+          <button
+            className={`p-2 rounded ${selectedCategory === 'all' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setSelectedCategory("all")}
+          >
+            All
+          </button>
+          <button
+            className={`p-2 rounded ${selectedCategory === 'image' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setSelectedCategory("image")}
+          >
+            Images
+          </button>
+          <button
+            className={`p-2 rounded ${selectedCategory === 'video' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setSelectedCategory("video")}
+          >
+            Videos
+          </button>
+        </div>
+
         <div>
           <h2 className="text-2xl font-bold mb-4">Uploaded Media</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {media.map((item) => (
+            {filteredMedia.map((item) => (
               <div key={item.id} className="relative">
                 {item.type === "image" ? (
                   <img src={item.url} alt={`media-${item.id}`} className="w-full h-auto" />
