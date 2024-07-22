@@ -18,9 +18,4 @@ export async function PUT(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: 'Failed to update URL' }, { status: 500 });
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};
+;
