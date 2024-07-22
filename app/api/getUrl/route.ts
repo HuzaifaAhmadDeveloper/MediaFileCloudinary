@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import dbConnect, { pool } from "@/app/utils/db";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   await dbConnect();
   try {
     const result = await pool.query('SELECT * FROM images');
@@ -12,8 +12,4 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// Note: No need to export `config` here. 
