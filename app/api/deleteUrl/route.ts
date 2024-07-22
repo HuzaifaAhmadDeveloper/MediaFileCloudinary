@@ -18,9 +18,3 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ error: 'Failed to delete URL' }, { status: 500 });
   }
 }
-
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};
